@@ -51,5 +51,5 @@ jobs:
       if: github.repository != 'nix-community/nixbox'
       env:
         HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
-        HCP_CLIENT_SECRETS: ${{ secrets.HCP_CLIENT_SECRET }}
+        HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
       run: make VERSION=${GITHUB_REF#refs/heads/nixos-} BUILDER=${{ matrix.BUILDER }} REPO=${{ vars.HCP_REPO }} packer-build

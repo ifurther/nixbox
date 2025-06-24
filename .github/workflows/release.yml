@@ -9,8 +9,6 @@ jobs:
     name: Run build ${{ matrix.BUILDER }} ${{ matrix.ARCH }}
     continue-on-error: true
     runs-on: ubuntu-latest
-    env:
-      USER: nix
     strategy:
       matrix:
         BUILDER: ['virtualbox-iso.virtualbox', 'qemu.qemu']
@@ -50,6 +48,8 @@ jobs:
     - name: Run build ${{ matrix.BUILDER }} ${{ matrix.ARCH }} and push box to vagrant registry
       if: github.repository != 'nix-community/nixbox'
       env:
+        USER: nix
+        LOGNAME: nix
         HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
         HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
       run: make VERSION=${GITHUB_REF#refs/heads/nixos-} BUILDER=${{ matrix.BUILDER }} REPO=${{ vars.HCP_REPO }} packer-build
